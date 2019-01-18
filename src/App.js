@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import Navbar from './Navigation/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import Navbar from './Navigation/Menu';
 import AddGroup from './Components/AddGroup';
 import AddQuestion from './Components/AddQuestion';
 import AddUser from './Components/AddUser';
@@ -19,8 +19,8 @@ class App extends React.PureComponent {
       <Router>
         <div>
           <Navbar>
-            <Link
-              to='/test'
+          <Link
+              to='/addGroup'
               style={style.links}
             >
               <MenuItem>
@@ -28,21 +28,22 @@ class App extends React.PureComponent {
           </MenuItem>
             </Link>
             <Link
-              to='/addQuestion'
+              to='/addUser'
               style={style.links}>
               <MenuItem>
                 Add One User
           </MenuItem>
             </Link>
             <Link
-              to='/addGroup'
+              to='/addTest'
               style={style.links}
             >
               <MenuItem>
                 Add Test
           </MenuItem>
-            </Link> <Link
-              to='/addUser'
+            </Link>
+            <Link
+              to='/addQuestion'
               style={style.links}
             >
               <MenuItem>
@@ -53,10 +54,10 @@ class App extends React.PureComponent {
           <div>
             <Switch>
               <Route path="/" exact={true} component={AddTest}></Route>
-              <Route path='/test' component={AddTest}></Route>
+              <Route path='/addTest' component={AddTest}></Route>
               <Route path='/addQuestion' component={AddQuestion}></Route>
               <Route path='/addGroup' component={AddGroup}></Route>
-              <Route path='/addUser' component={AddUser}></Route>
+              <Route path='/addUser' component={AddUser}></Route>      
             </Switch>
           </div>
         </div>
