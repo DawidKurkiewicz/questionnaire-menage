@@ -6,6 +6,7 @@ import AddGroup from './Components/AddGroup';
 import AddQuestion from './Components/AddQuestion';
 import AddUser from './Components/AddUser';
 import AddTest from './Components/AddTest';
+import TestList from './Components/TestList'
 
 const style = {
   links: {
@@ -19,6 +20,14 @@ class App extends React.PureComponent {
       <Router>
         <div>
           <Navbar>
+          <Link
+              to='/testList'
+              style={style.links}
+            >
+              <MenuItem>
+                List
+          </MenuItem>
+            </Link>
           <Link
               to='/addGroup'
               style={style.links}
@@ -53,11 +62,12 @@ class App extends React.PureComponent {
           </Navbar>
           <div>
             <Switch>
-              <Route path="/" exact={true} component={AddTest}></Route>
+              <Route path="/" exact={true} component={TestList}></Route>
+              <Route path='/testList' component={TestList}></Route>
               <Route path='/addTest' component={AddTest}></Route>
               <Route path='/addQuestion' component={AddQuestion}></Route>
               <Route path='/addGroup' component={AddGroup}></Route>
-              <Route path='/addUser' component={AddUser}></Route>      
+              <Route path='/addUser' component={AddUser}></Route> 
             </Switch>
           </div>
         </div>
