@@ -1,9 +1,9 @@
 import React from 'react';
 
-const AddQuestion = (props) => (
+const AddTest = (props) => (
     <div>
-        AddQuestions
+        add question
     </div>
 )
 
-export default AddQuestion
+export default AddTest
