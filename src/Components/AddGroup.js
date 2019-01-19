@@ -32,10 +32,11 @@ class AddGroupView extends React.Component {
         super(props)
 
         this.state = {
-            currentUserId: "quest",
+            currentUserId: "guest",
             students: [],
             open: false,
             isFormFilledCorrectly: false,
+            createdGroup: {}
         }
     }
 
