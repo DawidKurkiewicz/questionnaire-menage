@@ -1,12 +1,10 @@
 import React from 'react'
-
 import Paper from "material-ui/Paper"
 import SelectField from "material-ui/SelectField"
 import RaisedButton from "material-ui/RaisedButton"
 import TextField from "material-ui/TextField"
 import MenuItem from "material-ui/MenuItem"
 import Snackbar from 'material-ui/Snackbar'
-
 import { database } from '../firebase'
 
 const style = {
@@ -20,9 +18,9 @@ const style = {
     item: {
         float: "center"
     },
-    snackbar:{
-        width:'100%',
-        maxWidth:'100%',
+    snackbar: {
+        width: '100%',
+        maxWidth: '100%',
     }
 }
 
@@ -35,16 +33,14 @@ class AddQuestionView extends React.Component {
             value: 0,
             chosenCategoryFilter: 0,
             isFormFilledCorrectly: false,
-            categoryFilters: ['1', "2", "3", "4", "5", "6"],
+            categoryFilters: ['Any', "set1", "set2", "set3", "set4", "set5"],
             chosenLevel: 0,
             levelFilters: ['type1', 'type2', 'type3'],
             newQuestion: {
-                category: '1',
-                correct_answer: '',
-                type: 'Easy',
-                incorrect_answers: {
-                },
+                category: 'Any',
+                level: 'type1',
                 question: '',
+
             }
         }
     }
@@ -68,21 +64,7 @@ class AddQuestionView extends React.Component {
             chosenLevel: value,
             newQuestion: {
                 ...this.state.newQuestion,
-                type: this.state.levelFilters[value]
-            }
-        })
-    }
-
-    makeOnTextInputChangeHandler = (index) => (event) => {
-        const newIncorrectAnswer = {
-            ...this.state.newQuestion.incorrect_answers,
-            [index]: event.target.value
-        }
-        console.log(newIncorrectAnswer)
-        this.setState({
-            newQuestion: {
-                ...this.state.newQuestion,
-                incorrect_answers: newIncorrectAnswer
+                level: this.state.levelFilters[value]
             }
         })
     }
@@ -95,22 +77,9 @@ class AddQuestionView extends React.Component {
         })
     }
 
-    onTextCorrectAnswerChangeHandler = (event) => {
-        this.setState({
-            newQuestion: {
-                ...this.state.newQuestion,
-                correct_answer: event.target.value
-            }
-        })
-    }
-
-
     onSaveButtonClickHandler = (event) => {
         if (this.state.newQuestion.category !== '' &&
-            this.state.newQuestion.correct_answer !== '' &&
-            this.state.newQuestion.question !==''&&
-            Object.values(this.state.newQuestion.incorrect_answers).map(answer=>answer!==0) ) {
-            
+            this.state.newQuestion.question !== '') {
             this.setState({ isFormFilledCorrectly: true })
             database.ref('/questions').push(this.state.newQuestion)
             this.setState({ open: true })
@@ -128,7 +97,7 @@ class AddQuestionView extends React.Component {
                     Add question
                         </h2>
                 <SelectField
-                    floatingLabelText="Choose category"
+                    floatingLabelText="Choose set"
                     value={this.state.chosenCategoryFilter}
                     onChange={this.handleCategoryChange}
                 >
@@ -158,27 +127,6 @@ class AddQuestionView extends React.Component {
                     floatingLabelText="Question"
                     fullWidth={true}
                     onChange={this.onTextQuestionInputChangeHandler}
-                />
-
-                <TextField
-                    floatingLabelText="Incorrect answer"
-                    fullWidth={true}
-                    onChange={this.makeOnTextInputChangeHandler(0)}
-                />
-                <TextField
-                    floatingLabelText="Incorrect answer"
-                    fullWidth={true}
-                    onChange={this.makeOnTextInputChangeHandler(1)}
-                />
-                <TextField
-                    floatingLabelText="Incorrect answer"
-                    fullWidth={true}
-                    onChange={this.makeOnTextInputChangeHandler(2)}
-                />
-                <TextField
-                    floatingLabelText="Correct answer"
-                    fullWidth={true}
-                    onChange={this.onTextCorrectAnswerChangeHandler}
                 />
                 <RaisedButton
                     label="Save question"

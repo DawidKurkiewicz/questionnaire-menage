@@ -1,12 +1,8 @@
 import React from 'react'
-
 import Paper from "material-ui/Paper"
-import SelectField from "material-ui/SelectField"
 import RaisedButton from "material-ui/RaisedButton"
 import TextField from "material-ui/TextField"
-import MenuItem from "material-ui/MenuItem"
 import Snackbar from 'material-ui/Snackbar'
-
 import { database } from '../firebase'
 
 const style = {
@@ -20,9 +16,9 @@ const style = {
     item: {
         float: "center"
     },
-    snackbar:{
-        width:'100%',
-        maxWidth:'100%',
+    snackbar: {
+        width: '100%',
+        maxWidth: '100%',
     }
 }
 
@@ -33,11 +29,8 @@ class AddStudentView extends React.Component {
         this.state = {
             open: false,
             value: 0,
-            chosenGroupFilter: 0,
             isFormFilledCorrectly: false,
-            groupFilters: ['group1', "group2", "group3", "group4"],
             newStudent: {
-                group: 'group1',
                 student: '',
             }
         }
@@ -47,16 +40,6 @@ class AddStudentView extends React.Component {
             open: false,
         });
     };
-
-    handleGroupChange = (event, index, value) => {
-        this.setState({
-            chosenGroupFilter: value,
-            newStudent: {
-                ...this.state.newStudent,
-                group: this.state.groupFilters[value]
-            }
-        })
-    }
     onTextStudentInputChangeHandler = (event) => {
         this.setState({
             newStudent: {
@@ -66,8 +49,7 @@ class AddStudentView extends React.Component {
         })
     }
     onSaveButtonClickHandler = (event) => {
-        if (this.state.newStudent.group !== '' &&
-            this.state.newStudent.student !=='') {
+        if (this.state.newStudent.student !== '') {
             this.setState({ isFormFilledCorrectly: true })
             database.ref('/students').push(this.state.newStudent)
             this.setState({ open: true })
@@ -84,19 +66,6 @@ class AddStudentView extends React.Component {
                 <h2>
                     Add user
                         </h2>
-                <SelectField
-                    floatingLabelText="Choose group"
-                    value={this.state.chosenGroupFilter}
-                    onChange={this.handleGroupChange}
-                >
-                    {this.state.groupFilters.map((group, index) => (
-                        <MenuItem
-                            key={index}
-                            value={index}
-                            primaryText={group}
-                        />
-                    ))}
-                </SelectField>
                 <br />
                 <TextField
                     floatingLabelText="Student"

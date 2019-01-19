@@ -2,7 +2,7 @@ import React from 'react';
 
 const AddTest = (props) => (
     <div>
-        AddTests
+        Add Test
     </div>
 )
 
