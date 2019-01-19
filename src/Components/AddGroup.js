@@ -32,11 +32,12 @@ class AddGroupView extends React.Component {
         super(props)
 
         this.state = {
-            currentUserId: "guest",
             students: [],
             open: false,
-            isFormFilledCorrectly: false,
-            createdGroup: {}
+            createdGroup: {
+                description: "",
+                students: {}
+            }
         }
     }
 
@@ -65,15 +66,17 @@ class AddGroupView extends React.Component {
     componentWillUnmount() {
         database.ref('/students').off()
     }
-    onClickSaveHandler = (event) => {
+    onClickSaveHandler = () => {
         if (this.state.createdGroup.description !== '' &&
             Object.keys(this.state.createdGroup.students).length !== 0) {
-            this.setState({ isFormFilledCorrectly: true })
             this.postToFirebase()
             this.setState({
                 open: true
             })
+        } else { 
+            alert("Please check if you added Title and Students  ")
         }
+
     }
 
     handleRequestClose = () => {
@@ -83,7 +86,7 @@ class AddGroupView extends React.Component {
     };
 
     postToFirebase = () => {
-        database.ref(`/users/${this.state.currentUserId}/groups`).push(this.state.createdGroup)
+        database.ref(`/users/groups`).push(this.state.createdGroup)
     }
 
     onTextInputChangeHandler = (event) => {
@@ -146,9 +149,8 @@ class AddGroupView extends React.Component {
                     open={this.state.open}
                     style={style.snackbar}
                     bodyStyle={style.snackbar}
-                    message={this.state.isFormFilledCorrectly ?
-                        "Your group has been added to the database" :
-                        "Your group has not been filled correctly !"
+                    message={
+                        "Your group has been added to the database"
                     }
                     autoHideDuration={4000}
                     onRequestClose={this.handleRequestClose}

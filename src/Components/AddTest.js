@@ -35,14 +35,16 @@ class AddTestView extends React.Component {
         super(props)
 
         this.state = {
-            currentUserId: "guest",
             value: "",
             questions: [],
             open: false,
-            chosenCategoryFilter:0,
-            isFormFilledCorrectly: false,
+            chosenCategoryFilter: 0,
             categoryFilters: ['Any', "set1", "set2", "set3", "set4", "set5"],
-            createdTest: {}
+            createdTest: {
+                description: "",
+                category: "Any",
+                questions: {}
+            }
         }
     }
 
@@ -82,19 +84,18 @@ class AddTestView extends React.Component {
         })
     }
 
-
-    onClickSaveHandler = (event) => {
-        if (this.state.createdTest.category !== '' &&
-            this.state.createdTest.description !== '' &&
+    onClickSaveHandler = () => {
+        if (this.state.createdTest.description !== '' &&
+            this.state.createdTest.category !== '' &&
             Object.keys(this.state.createdTest.questions).length !== 0) {
-            this.setState({ isFormFilledCorrectly: true })
             this.postToFirebase()
             this.setState({
                 open: true
             })
+        } else {
+            alert("Please check if you are added Title and Question")
         }
     }
-
     handleRequestClose = () => {
         this.setState({
             open: false,
@@ -102,7 +103,7 @@ class AddTestView extends React.Component {
     };
 
     postToFirebase = () => {
-        database.ref(`/users/${this.state.currentUserId}/tests`).push(this.state.createdTest)
+        database.ref(`/users/tests`).push(this.state.createdTest)
     }
 
     onTextInputChangeHandler = (event) => {
@@ -185,9 +186,8 @@ class AddTestView extends React.Component {
                     open={this.state.open}
                     style={style.snackbar}
                     bodyStyle={style.snackbar}
-                    message={this.state.isFormFilledCorrectly ?
-                        "Your test has been added to the database" :
-                        "Your test has not been filled correctly !"
+                    message={
+                        "Your test has been added to the database"
                     }
                     autoHideDuration={4000}
                     onRequestClose={this.handleRequestClose}
