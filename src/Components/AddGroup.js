@@ -6,8 +6,6 @@ import { List, ListItem } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox'
 import Snackbar from 'material-ui/Snackbar'
-
-
 import { database } from '../firebase'
 
 const style = {
@@ -17,9 +15,6 @@ const style = {
     },
     button: {
         marginTop: 20
-    },
-    item: {
-        float: "center"
     },
     snackbar: {
         width: '100%',

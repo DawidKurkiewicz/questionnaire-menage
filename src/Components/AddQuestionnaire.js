@@ -18,9 +18,6 @@ const style = {
     button: {
         marginTop: 20
     },
-    item: {
-        float: "center"
-    },
     snackbar: {
         width: '100%',
         maxWidth: '100%',
@@ -32,7 +29,6 @@ class AddQuestionnaireView extends React.Component {
         super(props)
 
         this.state = {
-            value: "",
             questionnaires: [],
             open: false,
             createdQuestionnaire: {
@@ -91,16 +87,6 @@ class AddQuestionnaireView extends React.Component {
         database.ref('/groups').off()
         database.ref('/tests').off()
 
-    }
-
-    onSearchSelectFieldValueChangeHandler = (event, index, value) => {
-        this.setState({
-            chosenCategoryFilter: value,
-            createdQuestionnaire: {
-                ...this.state.createdQuestionnaire,
-                category: this.state.categoryFilters[value]
-            }
-        })
     }
 
     onClickSaveHandler = () => {
@@ -216,7 +202,7 @@ class AddQuestionnaireView extends React.Component {
                     style={style.snackbar}
                     bodyStyle={style.snackbar}
                     message={
-                        "Your test has been added to the database"
+                        "Your questionnaire has been added to the database"
                     }
                     autoHideDuration={4000}
                     onRequestClose={this.handleRequestClose}

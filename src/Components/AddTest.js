@@ -9,20 +9,15 @@ import Subheader from 'material-ui/Subheader'
 import Checkbox from 'material-ui/Checkbox'
 import Snackbar from 'material-ui/Snackbar'
 import { unifyString } from './utils'
-
-
 import { database } from '../firebase'
 
 const style = {
     paper: {
         margin: 20,
-        padding: 20
+        padding: 20,
     },
     button: {
         marginTop: 20
-    },
-    item: {
-        float: "center"
     },
     snackbar: {
         width: '100%',
@@ -35,7 +30,6 @@ class AddTestView extends React.Component {
         super(props)
 
         this.state = {
-            value: "",
             questions: [],
             open: false,
             chosenCategoryFilter: 0,

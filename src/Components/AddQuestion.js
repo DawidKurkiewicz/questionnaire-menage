@@ -15,9 +15,6 @@ const style = {
     button: {
         marginTop: 20
     },
-    item: {
-        float: "center"
-    },
     snackbar: {
         width: '100%',
         maxWidth: '100%',
