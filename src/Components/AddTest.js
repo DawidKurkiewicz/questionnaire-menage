@@ -39,10 +39,9 @@ class AddTestView extends React.Component {
             questions: [],
             open: false,
             chosenCategoryFilter: 0,
-            categoryFilters: ['Any', "set1", "set2", "set3", "set4", "set5"],
+            categoryFilters: ['Any', "type1", "type2", "type3", "type4", "type5"],
             createdTest: {
                 description: "",
-                category: "Any",
                 questions: {}
             }
         }
@@ -79,7 +78,6 @@ class AddTestView extends React.Component {
             chosenCategoryFilter: value,
             createdTest: {
                 ...this.state.createdTest,
-                category: this.state.categoryFilters[value]
             }
         })
     }
@@ -92,6 +90,8 @@ class AddTestView extends React.Component {
             this.setState({
                 open: true
             })
+            window.location.reload();
+
         } else {
             alert("Please check if you are added Title and Question")
         }
@@ -103,7 +103,7 @@ class AddTestView extends React.Component {
     };
 
     postToFirebase = () => {
-        database.ref(`/users/tests`).push(this.state.createdTest)
+        database.ref(`/tests`).push(this.state.createdTest)
     }
 
     onTextInputChangeHandler = (event) => {
@@ -139,7 +139,7 @@ class AddTestView extends React.Component {
                 />
 
                 <SelectField
-                    floatingLabelText="Sets"
+                    floatingLabelText="Types"
                     value={this.state.chosenCategoryFilter}
                     onChange={this.onSearchSelectFieldValueChangeHandler}
                 >

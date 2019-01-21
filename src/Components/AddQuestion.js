@@ -33,12 +33,10 @@ class AddQuestionView extends React.Component {
             value: 0,
             chosenCategoryFilter: 0,
             isFormFilledCorrectly: false,
-            categoryFilters: ['Any', "set1", "set2", "set3", "set4", "set5"],
+            categoryFilters: ['Any', "type1", "type2", "type3", "type4", "type5"],
             chosenLevel: 0,
-            levelFilters: ['type1', 'type2', 'type3'],
             newQuestion: {
                 category: 'Any',
-                level: 'type1',
                 question: '',
 
             }
@@ -56,15 +54,6 @@ class AddQuestionView extends React.Component {
             newQuestion: {
                 ...this.state.newQuestion,
                 category: this.state.categoryFilters[value]
-            }
-        })
-    }
-    handleLevelChange = (event, index, value) => {
-        this.setState({
-            chosenLevel: value,
-            newQuestion: {
-                ...this.state.newQuestion,
-                level: this.state.levelFilters[value]
             }
         })
     }
@@ -97,7 +86,7 @@ class AddQuestionView extends React.Component {
                     Add question
                         </h2>
                 <SelectField
-                    floatingLabelText="Choose set"
+                    floatingLabelText="Choose type"
                     value={this.state.chosenCategoryFilter}
                     onChange={this.handleCategoryChange}
                 >
@@ -110,19 +99,6 @@ class AddQuestionView extends React.Component {
                     ))}
                 </SelectField>
                 <br />
-                <SelectField
-                    floatingLabelText="type"
-                    value={this.state.chosenLevel}
-                    onChange={this.handleLevelChange}
-                >
-                    {this.state.levelFilters.map((level, index) => (
-                        <MenuItem
-                            key={index}
-                            value={index}
-                            primaryText={level}
-                        />
-                    ))}
-                </SelectField>
                 <TextField
                     floatingLabelText="Question"
                     fullWidth={true}

@@ -7,6 +7,7 @@ import AddQuestion from './Components/AddQuestion';
 import AddUser from './Components/AddUser';
 import AddTest from './Components/AddTest';
 import TestList from './Components/TestList'
+import AddQuestionnaire from './Components/AddQuestionnaire'
 
 const style = {
   links: {
@@ -20,35 +21,12 @@ class App extends React.PureComponent {
       <Router>
         <div>
           <Navbar>
-          <Link
+            <Link
               to='/testList'
               style={style.links}
             >
               <MenuItem>
                 List
-          </MenuItem>
-            </Link>
-          <Link
-              to='/addGroup'
-              style={style.links}
-            >
-              <MenuItem>
-                Add Group of Users
-          </MenuItem>
-            </Link>
-            <Link
-              to='/addUser'
-              style={style.links}>
-              <MenuItem>
-                Add One User
-          </MenuItem>
-            </Link>
-            <Link
-              to='/addTest'
-              style={style.links}
-            >
-              <MenuItem>
-                Add Test
           </MenuItem>
             </Link>
             <Link
@@ -59,6 +37,37 @@ class App extends React.PureComponent {
                 Add Question
           </MenuItem>
             </Link>
+            <Link
+              to='/addUser'
+              style={style.links}>
+              <MenuItem>
+                Add Student
+          </MenuItem>
+            </Link>
+            <Link
+              to='/addTest'
+              style={style.links}
+            >
+              <MenuItem>
+                Add Set of Questions
+          </MenuItem>
+            </Link>
+            <Link
+              to='/addGroup'
+              style={style.links}
+            >
+              <MenuItem>
+                Add Group of Students
+          </MenuItem>
+            </Link>
+            <Link
+              to='/addQuestionnaire'
+              style={style.links}
+            >
+              <MenuItem>
+                Add Questionnaire
+              </MenuItem>
+            </Link>
           </Navbar>
           <div>
             <Switch>
@@ -67,7 +76,8 @@ class App extends React.PureComponent {
               <Route path='/addTest' component={AddTest}></Route>
               <Route path='/addQuestion' component={AddQuestion}></Route>
               <Route path='/addGroup' component={AddGroup}></Route>
-              <Route path='/addUser' component={AddUser}></Route> 
+              <Route path='/addUser' component={AddUser}></Route>
+              <Route path='/addQuestionnaire' component={AddQuestionnaire}></Route>
             </Switch>
           </div>
         </div>

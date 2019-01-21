@@ -73,10 +73,11 @@ class AddGroupView extends React.Component {
             this.setState({
                 open: true
             })
-        } else { 
+            window.location.reload();
+
+        } else {
             alert("Please check if you added Title and Students  ")
         }
-
     }
 
     handleRequestClose = () => {
@@ -86,7 +87,7 @@ class AddGroupView extends React.Component {
     };
 
     postToFirebase = () => {
-        database.ref(`/users/groups`).push(this.state.createdGroup)
+        database.ref(`/groups`).push(this.state.createdGroup)
     }
 
     onTextInputChangeHandler = (event) => {
