@@ -4,7 +4,6 @@ import RaisedButton from "material-ui/RaisedButton"
 import TextField from "material-ui/TextField"
 import { List, ListItem } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
-import Checkbox from 'material-ui/Checkbox'
 import Snackbar from 'material-ui/Snackbar'
 
 
@@ -94,11 +93,15 @@ class AddQuestionnaireView extends React.Component {
             Object.keys(this.state.createdQuestionnaire.tests).length !== 0
             && Object.keys(this.state.createdQuestionnaire.groups).length !== 0 ) {
             this.postToFirebase()
+            this.myFormRef.reset();
             this.setState({
-                open: true
-            })
-            window.location.reload();
-
+              open: true,
+              createdQuestionnaire: {
+                description: "",
+                groups: {},
+                tests: {}
+              }
+            });
         } else {
             alert("Please check if you are added Title, Tests and Students")
         }
@@ -150,6 +153,8 @@ class AddQuestionnaireView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
+                        <form ref={el => (this.myFormRef = el)}>
+
                 <h2> New Questionnaire  </h2>
                 <TextField
                     floatingLabelText="Name your questionnaire"
@@ -166,7 +171,8 @@ class AddQuestionnaireView extends React.Component {
                                 <ListItem
                                     key={test.id}
                                     primaryText={test.description }
-                                    leftCheckbox={<Checkbox
+                                    leftCheckbox={<input
+                                        type="checkbox"
                                         onClick={() => this.onTestCheckBoxSelectionHandler(test.id)} />}
                                 />
                             ))
@@ -182,7 +188,8 @@ class AddQuestionnaireView extends React.Component {
                                 <ListItem
                                     key={group.id}
                                     primaryText={group.description }
-                                    leftCheckbox={<Checkbox
+                                    leftCheckbox={<input
+                                        type="checkbox"
                                         onClick={() => this.onGroupCheckBoxSelectionHandler(group.id)} />}
                                 />
                             ))
@@ -207,6 +214,7 @@ class AddQuestionnaireView extends React.Component {
                     autoHideDuration={4000}
                     onRequestClose={this.handleRequestClose}
                 />
+                </form>
             </Paper>
         )
     }

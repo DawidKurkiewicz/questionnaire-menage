@@ -4,7 +4,6 @@ import RaisedButton from "material-ui/RaisedButton"
 import TextField from "material-ui/TextField"
 import { List, ListItem } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
-import Checkbox from 'material-ui/Checkbox'
 import Snackbar from 'material-ui/Snackbar'
 import { database } from '../firebase'
 
@@ -65,10 +64,14 @@ class AddGroupView extends React.Component {
         if (this.state.createdGroup.description !== '' &&
             Object.keys(this.state.createdGroup.students).length !== 0) {
             this.postToFirebase()
+            this.myFormRef.reset();
             this.setState({
-                open: true
+                open: true,
+                createdGroup: {
+                    description: "",
+                    students: {}
+                }
             })
-            window.location.reload();
 
         } else {
             alert("Please check if you added Title and Students  ")
@@ -110,47 +113,51 @@ class AddGroupView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
-                <h2> New group  </h2>
-                <TextField
-                    floatingLabelText="Name your group"
-                    fullWidth={true}
-                    onChange={this.onTextInputChangeHandler}
-                />
-                <List>
-                    < Subheader > Available Students</Subheader>
-                    {
-                        this.state.students &&
-                        this.state.students.map &&
-                        this.state.students
-                            .map(student => (
-                                <ListItem
-                                    key={student.id}
-                                    primaryText={student.student}
-                                    leftCheckbox={<Checkbox
-                                        onClick={() => this.onCheckBoxSelectionHandler(student.id)} />}
-                                />
-                            ))
-                    }
-                </List >
+                <form ref={el => (this.myFormRef = el)}>
 
-                <RaisedButton
-                    label="Save"
-                    primary={true}
-                    fullWidth={true}
-                    style={style.button}
-                    onClick={this.onClickSaveHandler}
-                />
+                    <h2> New group  </h2>
+                    <TextField
+                        floatingLabelText="Name your group"
+                        fullWidth={true}
+                        onChange={this.onTextInputChangeHandler}
+                    />
+                    <List>
+                        < Subheader > Available Students</Subheader>
+                        {
+                            this.state.students &&
+                            this.state.students.map &&
+                            this.state.students
+                                .map(student => (
+                                    <ListItem
+                                        key={student.id}
+                                        primaryText={student.student}
+                                        leftCheckbox={<input
+                                            type="checkbox"
+                                            onClick={() => this.onCheckBoxSelectionHandler(student.id)} />}
+                                    />
+                                ))
+                        }
+                    </List >
 
-                <Snackbar
-                    open={this.state.open}
-                    style={style.snackbar}
-                    bodyStyle={style.snackbar}
-                    message={
-                        "Your group has been added to the database"
-                    }
-                    autoHideDuration={4000}
-                    onRequestClose={this.handleRequestClose}
-                />
+                    <RaisedButton
+                        label="Save"
+                        primary={true}
+                        fullWidth={true}
+                        style={style.button}
+                        onClick={this.onClickSaveHandler}
+                    />
+
+                    <Snackbar
+                        open={this.state.open}
+                        style={style.snackbar}
+                        bodyStyle={style.snackbar}
+                        message={
+                            "Your group has been added to the database"
+                        }
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleRequestClose}
+                    />
+                </form>
             </Paper>
         )
     }

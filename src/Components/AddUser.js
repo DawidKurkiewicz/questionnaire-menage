@@ -24,9 +24,8 @@ class AddStudentView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            desciption: "",
             open: false,
-            value: 0,
-            isFormFilledCorrectly: false,
             newStudent: {
                 student: '',
             }
@@ -47,11 +46,18 @@ class AddStudentView extends React.Component {
     }
     onSaveButtonClickHandler = (event) => {
         if (this.state.newStudent.student !== '') {
-            this.setState({ isFormFilledCorrectly: true })
             database.ref('/students').push(this.state.newStudent)
-            this.setState({ open: true })
+            this.myFormRef.reset();
+            this.setState({
+                open: true,
+                chosenCategoryFilter: 0,
+                newStudent: {
+                    student: '',
+                }
+            })
         } else {
-            this.setState({ open: true })
+            this.setState({ open: false })
+            alert("Please check if you are added your student name")
         }
     }
 
@@ -60,34 +66,34 @@ class AddStudentView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
-                <h2>
-                    Add user
+                <form ref={el => (this.myFormRef = el)}>
+                    <h2>
+                        Add user
                         </h2>
-                <br />
-                <TextField
-                    floatingLabelText="Student"
-                    fullWidth={true}
-                    onChange={this.onTextStudentInputChangeHandler}
-                />
-                <RaisedButton
-                    label="Save student"
-                    primary={true}
-                    fullWidth={true}
-                    style={style.button}
-                    onClick={this.onSaveButtonClickHandler}
-                />
-                <Snackbar
-                    open={this.state.open}
-                    style={style.snackbar}
-                    bodyStyle={style.snackbar}
-                    message={this.state.isFormFilledCorrectly ?
-                        "Student added" :
-                        "Your new student form has not been filled correctly"
-                    }
-                    autoHideDuration={4000}
-                    onRequestClose={this.handleRequestClose}
-
-                />
+                    <br />
+                    <TextField
+                        floatingLabelText="Student"
+                        fullWidth={true}
+                        onChange={this.onTextStudentInputChangeHandler}
+                    />
+                    <RaisedButton
+                        label="Save student"
+                        primary={true}
+                        fullWidth={true}
+                        style={style.button}
+                        onClick={this.onSaveButtonClickHandler}
+                    />
+                    <Snackbar
+                        open={this.state.open}
+                        style={style.snackbar}
+                        bodyStyle={style.snackbar}
+                        message={
+                            "Student added"
+                        }
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleRequestClose}
+                    />
+                </form>
             </Paper>
         )
     }
