@@ -134,7 +134,6 @@ class AddTestView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
-                <form ref={el => (this.myFormRef = el)}>
                     <h2> New test  </h2>
                     <TextField
                         floatingLabelText="Name your test"
@@ -155,6 +154,7 @@ class AddTestView extends React.Component {
                             />
                         ))}
                     </SelectField>
+                    <form ref={el => (this.myFormRef = el)}>
                     <List>
                         < Subheader > Available Questions</Subheader>
                         {

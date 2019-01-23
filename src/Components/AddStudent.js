@@ -50,7 +50,6 @@ class AddStudentView extends React.Component {
     onSaveButtonClickHandler = (event) => {
         if (this.state.newStudent.student !== '') {
             database.ref('/students').push(this.state.newStudent)
-            this.myFormRef.reset()
             this.setState({
                 open: true,
                 value: "",
@@ -69,7 +68,6 @@ class AddStudentView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
-                <form ref={el => (this.myFormRef = el)}>
                     <h2>Add user</h2>
                     <TextField
                         floatingLabelText="Student"
@@ -78,7 +76,7 @@ class AddStudentView extends React.Component {
                         value={this.state.value}
                     />
                     <RaisedButton
-                        label="Save student"
+                        label="Save"
                         primary={true}
                         fullWidth={true}
                         style={style.button}
@@ -89,12 +87,11 @@ class AddStudentView extends React.Component {
                         style={style.snackbar}
                         bodyStyle={style.snackbar}
                         message={
-                            "Student added"
+                            "Your student has been added to our database"
                         }
                         autoHideDuration={4000}
                         onRequestClose={this.handleRequestClose}
                     />
-                </form>
             </Paper>
         )
     }

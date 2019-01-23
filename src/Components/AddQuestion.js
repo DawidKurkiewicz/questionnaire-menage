@@ -67,7 +67,6 @@ class AddQuestionView extends React.Component {
         if (
             this.state.newQuestion.question !== '') {
             database.ref('/questions').push(this.state.newQuestion)
-            this.myFormRef.reset()
             this.setState({
                 open: true,
                 value: "",
@@ -87,7 +86,6 @@ class AddQuestionView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
-                <form ref={el => (this.myFormRef = el)}>
                     <h2>Add question</h2>
                     <SelectField
                         floatingLabelText="Choose type"
@@ -109,7 +107,7 @@ class AddQuestionView extends React.Component {
                         value={this.state.value}
                     />
                     <RaisedButton
-                        label="Save question"
+                        label="Save"
                         primary={true}
                         fullWidth={true}
                         style={style.button}
@@ -125,7 +123,6 @@ class AddQuestionView extends React.Component {
                         autoHideDuration={4000}
                         onRequestClose={this.handleRequestClose}
                     />
-                </form>
             </Paper>
         )
     }

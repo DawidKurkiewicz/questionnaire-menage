@@ -129,12 +129,23 @@ class AddQuestionnaireView extends React.Component {
         })
     }
 
-    onQuestionnaireCheckBoxSelectionHandler = (id) => {
+    onTestCheckBoxSelectionHandler = (id, value) => {
+        const { checked } = this.state;
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+    
+    if (currentIndex === -1) {
+        newChecked.push(value);
+      } else {
+        newChecked.splice(currentIndex, 1);
+      }
+
         const newQuestionnaires = {
             ...this.state.createdQuestionnaire.tests,
         }
         newQuestionnaires[id] = true
         this.setState({
+            checked: newChecked,
             createdQuestionnaire: {
                 ...this.state.createdQuestionnaire,
                 tests: newQuestionnaires,
@@ -159,14 +170,14 @@ class AddQuestionnaireView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
+                <h2> New Questionnaire  </h2>
+                <TextField
+                    floatingLabelText="Name your questionnaire"
+                    fullWidth={true}
+                    onChange={this.onTextInputChangeHandler}
+                    value={this.state.value}
+                />
                 <form ref={el => (this.myFormRef = el)}>
-                    <h2> New Questionnaire  </h2>
-                    <TextField
-                        floatingLabelText="Name your questionnaire"
-                        fullWidth={true}
-                        onChange={this.onTextInputChangeHandler}
-                        value={this.state.value}
-                    />
                     <List>
                         < Subheader > Available Tests</Subheader>
                         {
@@ -179,7 +190,7 @@ class AddQuestionnaireView extends React.Component {
                                         primaryText={test.description}
                                         leftCheckbox={<input
                                             type="checkbox"
-                                            onClick={() => this.onQuestionnaireCheckBoxSelectionHandler(test.id)} />}
+                                            onClick={() => this.onTestCheckBoxSelectionHandler(test.id)} />}
                                     />
                                 ))
                         }

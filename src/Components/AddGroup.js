@@ -119,14 +119,14 @@ class AddGroupView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
+                <h2> New group  </h2>
+                <TextField
+                    floatingLabelText="Name your group"
+                    fullWidth={true}
+                    onChange={this.onTextInputChangeHandler}
+                    value={this.state.value}
+                />
                 <form ref={el => (this.myFormRef = el)}>
-                    <h2> New group  </h2>
-                    <TextField
-                        floatingLabelText="Name your group"
-                        fullWidth={true}
-                        onChange={this.onTextInputChangeHandler}
-                        value={this.state.value}
-                    />
                     <List>
                         < Subheader > Available Students</Subheader>
                         {

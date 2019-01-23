@@ -11,8 +11,7 @@ const style = {
         margin: 20,
         padding: 20,
         textAlign: "center",
-        wordWrap: "break-word"
-
+        wordWrap: "break-word",
     },
     snackbar: {
         width: '100%',

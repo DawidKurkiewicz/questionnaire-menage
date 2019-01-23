@@ -14,7 +14,7 @@ const style = {
     },
     button: {
         marginTop: 20
-    }
+    },
 }
 
 class QuestionnaireView extends React.Component {
