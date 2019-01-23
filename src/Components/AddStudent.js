@@ -1,9 +1,9 @@
-import React from 'react'
-import Paper from "material-ui/Paper"
-import RaisedButton from "material-ui/RaisedButton"
-import TextField from "material-ui/TextField"
-import Snackbar from 'material-ui/Snackbar'
-import { database } from '../firebase'
+import React from 'react';
+import Paper from "material-ui/Paper";
+import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
+import Snackbar from 'material-ui/Snackbar';
+import { database } from '../firebase';
 
 const style = {
     paper: {
@@ -20,36 +20,40 @@ const style = {
 }
 
 class AddStudentView extends React.Component {
-
     constructor(props) {
         super(props)
         this.state = {
-            desciption: "",
+            value: "",
             open: false,
             newStudent: {
                 student: '',
             }
         }
     }
+
     handleRequestClose = () => {
         this.setState({
             open: false,
-        });
-    };
+        })
+    }
+
     onTextStudentInputChangeHandler = (event) => {
         this.setState({
+            value: event.target.value,
             newStudent: {
                 ...this.state.newStudent,
                 student: event.target.value
             }
         })
     }
+
     onSaveButtonClickHandler = (event) => {
         if (this.state.newStudent.student !== '') {
             database.ref('/students').push(this.state.newStudent)
-            this.myFormRef.reset();
+            this.myFormRef.reset()
             this.setState({
                 open: true,
+                value: "",
                 chosenCategoryFilter: 0,
                 newStudent: {
                     student: '',
@@ -61,20 +65,17 @@ class AddStudentView extends React.Component {
         }
     }
 
-
     render() {
         return (
             <Paper
                 style={style.paper}>
                 <form ref={el => (this.myFormRef = el)}>
-                    <h2>
-                        Add user
-                        </h2>
-                    <br />
+                    <h2>Add user</h2>
                     <TextField
                         floatingLabelText="Student"
                         fullWidth={true}
                         onChange={this.onTextStudentInputChangeHandler}
+                        value={this.state.value}
                     />
                     <RaisedButton
                         label="Save student"
@@ -98,4 +99,5 @@ class AddStudentView extends React.Component {
         )
     }
 }
+
 export default AddStudentView

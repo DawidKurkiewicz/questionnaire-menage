@@ -1,19 +1,20 @@
-import React from 'react'
-import Paper from "material-ui/Paper"
-import SelectField from "material-ui/SelectField"
-import RaisedButton from "material-ui/RaisedButton"
-import TextField from "material-ui/TextField"
-import MenuItem from "material-ui/MenuItem"
-import { List, ListItem } from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
-import Snackbar from 'material-ui/Snackbar'
-import { unifyString } from './utils'
-import { database } from '../firebase'
+import React from 'react';
+import Paper from "material-ui/Paper";
+import SelectField from "material-ui/SelectField";
+import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
+import MenuItem from "material-ui/MenuItem";
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Snackbar from 'material-ui/Snackbar';
+import { unifyString } from './utils';
+import { database } from '../firebase';
 
 const style = {
     paper: {
         margin: 20,
         padding: 20,
+        wordWrap: "break-word"
     },
     button: {
         marginTop: 20
@@ -30,6 +31,7 @@ class AddTestView extends React.Component {
 
         this.state = {
             questions: [],
+            value: "",
             open: false,
             chosenCategoryFilter: 0,
             categoryFilters: ['Any', "type1", "type2", "type3", "type4", "type5"],
@@ -80,10 +82,11 @@ class AddTestView extends React.Component {
             this.state.createdTest.category !== '' &&
             Object.keys(this.state.createdTest.questions).length !== 0) {
             this.postToFirebase()
-            this.myFormRef.reset();
+            this.myFormRef.reset()
             this.setState({
                 chosenCategoryFilter: 0,
                 open: true,
+                value: "",
                 createdTest: {
                     description: "",
                     questions: {}
@@ -93,11 +96,12 @@ class AddTestView extends React.Component {
             alert("Please check if you are added Title and Question")
         }
     }
+
     handleRequestClose = () => {
         this.setState({
             open: false,
-        });
-    };
+        })
+    }
 
     postToFirebase = () => {
         database.ref(`/tests`).push(this.state.createdTest)
@@ -105,16 +109,18 @@ class AddTestView extends React.Component {
 
     onTextInputChangeHandler = (event) => {
         this.setState({
+            value: event.target.value,
             createdTest: {
                 ...this.state.createdTest,
                 description: event.target.value
             }
         })
     }
+
     onCheckBoxSelectionHandler = (id) => {
         const newQuestions = {
             ...this.state.createdTest.questions,
-        };
+        }
         newQuestions[id] = true
         this.setState({
             createdTest: {
@@ -129,14 +135,13 @@ class AddTestView extends React.Component {
             <Paper
                 style={style.paper}>
                 <form ref={el => (this.myFormRef = el)}>
-
                     <h2> New test  </h2>
                     <TextField
                         floatingLabelText="Name your test"
                         fullWidth={true}
                         onChange={this.onTextInputChangeHandler}
+                        value={this.state.value}
                     />
-
                     <SelectField
                         floatingLabelText="Types"
                         value={this.state.chosenCategoryFilter}
@@ -173,7 +178,6 @@ class AddTestView extends React.Component {
                                 ))
                         }
                     </List >
-
                     <RaisedButton
                         label="Save"
                         primary={true}
@@ -181,7 +185,6 @@ class AddTestView extends React.Component {
                         style={style.button}
                         onClick={this.onClickSaveHandler}
                     />
-
                     <Snackbar
                         open={this.state.open}
                         style={style.snackbar}
@@ -197,4 +200,5 @@ class AddTestView extends React.Component {
         )
     }
 }
+
 export default AddTestView

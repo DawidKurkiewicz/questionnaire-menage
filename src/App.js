@@ -4,17 +4,17 @@ import MenuItem from 'material-ui/MenuItem';
 import Navbar from './Navigation/Menu';
 import AddGroup from './Components/AddGroup';
 import AddQuestion from './Components/AddQuestion';
-import AddUser from './Components/AddUser';
+import AddStudent from './Components/AddStudent';
 import AddTest from './Components/AddTest';
-import QuestionnaireList from './Components/QuestionnaireList'
-import AddQuestionnaire from './Components/AddQuestionnaire'
-import QuestionnaireView from './Components/QuestionnaireView'
+import QuestionnaireList from './Components/QuestionnaireList';
+import AddQuestionnaire from './Components/AddQuestionnaire';
+import QuestionnaireView from './Components/QuestionnaireView';
 
 const style = {
   links: {
     textDecoration: 'none'
   }
-};
+}
 
 class App extends React.PureComponent {
   render() {
@@ -39,18 +39,18 @@ class App extends React.PureComponent {
           </MenuItem>
             </Link>
             <Link
-              to='/addUser'
-              style={style.links}>
-              <MenuItem>
-                Add Student
-          </MenuItem>
-            </Link>
-            <Link
               to='/addTest'
               style={style.links}
             >
               <MenuItem>
                 Add Set of Questions
+          </MenuItem>
+            </Link>
+            <Link
+              to='/AddStudent'
+              style={style.links}>
+              <MenuItem>
+                Add Student
           </MenuItem>
             </Link>
             <Link
@@ -74,10 +74,10 @@ class App extends React.PureComponent {
             <Switch>
               <Route path="/" exact={true} component={QuestionnaireList}></Route>
               <Route path='/List' component={QuestionnaireList}></Route>
-              <Route path='/addTest' component={AddTest}></Route>
               <Route path='/addQuestion' component={AddQuestion}></Route>
+              <Route path='/addTest' component={AddTest}></Route>
+              <Route path='/AddStudent' component={AddStudent}></Route>
               <Route path='/addGroup' component={AddGroup}></Route>
-              <Route path='/addUser' component={AddUser}></Route>
               <Route path='/addQuestionnaire' component={AddQuestionnaire}></Route>
               <Route path="/questionnaire/:id" component={QuestionnaireView} />
             </Switch>
@@ -85,7 +85,7 @@ class App extends React.PureComponent {
         </div>
       </Router>
     )
-  };
-};
+  }
+}
 
 export default App;

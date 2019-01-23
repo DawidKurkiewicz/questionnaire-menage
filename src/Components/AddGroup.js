@@ -1,16 +1,17 @@
-import React from 'react'
-import Paper from "material-ui/Paper"
-import RaisedButton from "material-ui/RaisedButton"
-import TextField from "material-ui/TextField"
-import { List, ListItem } from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
-import Snackbar from 'material-ui/Snackbar'
-import { database } from '../firebase'
+import React from 'react';
+import Paper from "material-ui/Paper";
+import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Snackbar from 'material-ui/Snackbar';
+import { database } from '../firebase';
 
 const style = {
     paper: {
         margin: 20,
-        padding: 20
+        padding: 20,
+        wordWrap: "break-word"
     },
     button: {
         marginTop: 20
@@ -28,9 +29,10 @@ class AddGroupView extends React.Component {
         this.state = {
             students: [],
             open: false,
+            value: "",
             createdGroup: {
                 description: "",
-                students: {}
+                students: {},
             }
         }
     }
@@ -60,13 +62,15 @@ class AddGroupView extends React.Component {
     componentWillUnmount() {
         database.ref('/students').off()
     }
+
     onClickSaveHandler = () => {
         if (this.state.createdGroup.description !== '' &&
             Object.keys(this.state.createdGroup.students).length !== 0) {
             this.postToFirebase()
-            this.myFormRef.reset();
+            this.myFormRef.reset()
             this.setState({
                 open: true,
+                value: "",
                 createdGroup: {
                     description: "",
                     students: {}
@@ -81,8 +85,8 @@ class AddGroupView extends React.Component {
     handleRequestClose = () => {
         this.setState({
             open: false,
-        });
-    };
+        })
+    }
 
     postToFirebase = () => {
         database.ref(`/groups`).push(this.state.createdGroup)
@@ -90,16 +94,18 @@ class AddGroupView extends React.Component {
 
     onTextInputChangeHandler = (event) => {
         this.setState({
+            value: event.target.value,
             createdGroup: {
                 ...this.state.createdGroup,
                 description: event.target.value
             }
         })
     }
+
     onCheckBoxSelectionHandler = (id) => {
         const newStudents = {
             ...this.state.createdGroup.students,
-        };
+        }
         newStudents[id] = true
         this.setState({
             createdGroup: {
@@ -114,12 +120,12 @@ class AddGroupView extends React.Component {
             <Paper
                 style={style.paper}>
                 <form ref={el => (this.myFormRef = el)}>
-
                     <h2> New group  </h2>
                     <TextField
                         floatingLabelText="Name your group"
                         fullWidth={true}
                         onChange={this.onTextInputChangeHandler}
+                        value={this.state.value}
                     />
                     <List>
                         < Subheader > Available Students</Subheader>
@@ -133,12 +139,12 @@ class AddGroupView extends React.Component {
                                         primaryText={student.student}
                                         leftCheckbox={<input
                                             type="checkbox"
-                                            onClick={() => this.onCheckBoxSelectionHandler(student.id)} />}
+                                            onClick={() => this.onCheckBoxSelectionHandler(student.id)} />
+                                        }
                                     />
                                 ))
                         }
                     </List >
-
                     <RaisedButton
                         label="Save"
                         primary={true}
@@ -146,7 +152,6 @@ class AddGroupView extends React.Component {
                         style={style.button}
                         onClick={this.onClickSaveHandler}
                     />
-
                     <Snackbar
                         open={this.state.open}
                         style={style.snackbar}
@@ -162,4 +167,5 @@ class AddGroupView extends React.Component {
         )
     }
 }
+
 export default AddGroupView

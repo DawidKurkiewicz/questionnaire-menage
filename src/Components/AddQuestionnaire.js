@@ -1,18 +1,17 @@
-import React from 'react'
-import Paper from "material-ui/Paper"
-import RaisedButton from "material-ui/RaisedButton"
-import TextField from "material-ui/TextField"
-import { List, ListItem } from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
-import Snackbar from 'material-ui/Snackbar'
-
-
-import { database } from '../firebase'
+import React from 'react';
+import Paper from "material-ui/Paper";
+import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Snackbar from 'material-ui/Snackbar';
+import { database } from '../firebase';
 
 const style = {
     paper: {
         margin: 20,
-        padding: 20
+        padding: 20,
+        wordWrap: "break-word"
     },
     button: {
         marginTop: 20
@@ -29,6 +28,7 @@ class AddQuestionnaireView extends React.Component {
 
         this.state = {
             questionnaires: [],
+            value: "",
             open: false,
             createdQuestionnaire: {
                 description: "",
@@ -57,6 +57,7 @@ class AddQuestionnaireView extends React.Component {
             }
         )
     }
+
     loadTestData = () => {
         database.ref(`/tests`).on(
             'value',
@@ -91,26 +92,28 @@ class AddQuestionnaireView extends React.Component {
     onClickSaveHandler = () => {
         if (this.state.createdQuestionnaire.description !== '' &&
             Object.keys(this.state.createdQuestionnaire.tests).length !== 0
-            && Object.keys(this.state.createdQuestionnaire.groups).length !== 0 ) {
+            && Object.keys(this.state.createdQuestionnaire.groups).length !== 0) {
             this.postToFirebase()
-            this.myFormRef.reset();
+            this.myFormRef.reset()
             this.setState({
-              open: true,
-              createdQuestionnaire: {
-                description: "",
-                groups: {},
-                tests: {}
-              }
-            });
+                open: true,
+                value: "",
+                createdQuestionnaire: {
+                    description: "",
+                    groups: {},
+                    tests: {}
+                }
+            })
         } else {
             alert("Please check if you are added Title, Tests and Students")
         }
     }
+
     handleRequestClose = () => {
         this.setState({
             open: false,
-        });
-    };
+        })
+    }
 
     postToFirebase = () => {
         database.ref(`/questionnaires`).push(this.state.createdQuestionnaire)
@@ -118,16 +121,18 @@ class AddQuestionnaireView extends React.Component {
 
     onTextInputChangeHandler = (event) => {
         this.setState({
+            value: event.target.value,
             createdQuestionnaire: {
                 ...this.state.createdQuestionnaire,
                 description: event.target.value
             }
         })
     }
-    onTestCheckBoxSelectionHandler = (id) => {
+
+    onQuestionnaireCheckBoxSelectionHandler = (id) => {
         const newQuestionnaires = {
             ...this.state.createdQuestionnaire.tests,
-        };
+        }
         newQuestionnaires[id] = true
         this.setState({
             createdQuestionnaire: {
@@ -136,10 +141,11 @@ class AddQuestionnaireView extends React.Component {
             }
         })
     }
+
     onGroupCheckBoxSelectionHandler = (id) => {
         const newQuestionnaires = {
             ...this.state.createdQuestionnaire.groups,
-        };
+        }
         newQuestionnaires[id] = true
         this.setState({
             createdQuestionnaire: {
@@ -153,70 +159,69 @@ class AddQuestionnaireView extends React.Component {
         return (
             <Paper
                 style={style.paper}>
-                        <form ref={el => (this.myFormRef = el)}>
-
-                <h2> New Questionnaire  </h2>
-                <TextField
-                    floatingLabelText="Name your questionnaire"
-                    fullWidth={true}
-                    onChange={this.onTextInputChangeHandler}
-                />
-                <List>
-                    < Subheader > Available Tests</Subheader>
-                    {
-                        this.state.tests &&
-                        this.state.tests.map &&
-                        this.state.tests
-                            .map(test => (
-                                <ListItem
-                                    key={test.id}
-                                    primaryText={test.description }
-                                    leftCheckbox={<input
-                                        type="checkbox"
-                                        onClick={() => this.onTestCheckBoxSelectionHandler(test.id)} />}
-                                />
-                            ))
-                    }
-                </List >
-                <List>
-                    < Subheader > Available Groups</Subheader>
-                    {
-                        this.state.groups &&
-                        this.state.groups.map &&
-                        this.state.groups
-                            .map(group => (
-                                <ListItem
-                                    key={group.id}
-                                    primaryText={group.description }
-                                    leftCheckbox={<input
-                                        type="checkbox"
-                                        onClick={() => this.onGroupCheckBoxSelectionHandler(group.id)} />}
-                                />
-                            ))
-                    }
-                </List >
-
-                <RaisedButton
-                    label="Save"
-                    primary={true}
-                    fullWidth={true}
-                    style={style.button}
-                    onClick={this.onClickSaveHandler}
-                />
-
-                <Snackbar
-                    open={this.state.open}
-                    style={style.snackbar}
-                    bodyStyle={style.snackbar}
-                    message={
-                        "Your questionnaire has been added to the database"
-                    }
-                    autoHideDuration={4000}
-                    onRequestClose={this.handleRequestClose}
-                />
+                <form ref={el => (this.myFormRef = el)}>
+                    <h2> New Questionnaire  </h2>
+                    <TextField
+                        floatingLabelText="Name your questionnaire"
+                        fullWidth={true}
+                        onChange={this.onTextInputChangeHandler}
+                        value={this.state.value}
+                    />
+                    <List>
+                        < Subheader > Available Tests</Subheader>
+                        {
+                            this.state.tests &&
+                            this.state.tests.map &&
+                            this.state.tests
+                                .map(test => (
+                                    <ListItem
+                                        key={test.id}
+                                        primaryText={test.description}
+                                        leftCheckbox={<input
+                                            type="checkbox"
+                                            onClick={() => this.onQuestionnaireCheckBoxSelectionHandler(test.id)} />}
+                                    />
+                                ))
+                        }
+                    </List >
+                    <List>
+                        < Subheader > Available Groups</Subheader>
+                        {
+                            this.state.groups &&
+                            this.state.groups.map &&
+                            this.state.groups
+                                .map(group => (
+                                    <ListItem
+                                        key={group.id}
+                                        primaryText={group.description}
+                                        leftCheckbox={<input
+                                            type="checkbox"
+                                            onClick={() => this.onGroupCheckBoxSelectionHandler(group.id)} />}
+                                    />
+                                ))
+                        }
+                    </List >
+                    <RaisedButton
+                        label="Save"
+                        primary={true}
+                        fullWidth={true}
+                        style={style.button}
+                        onClick={this.onClickSaveHandler}
+                    />
+                    <Snackbar
+                        open={this.state.open}
+                        style={style.snackbar}
+                        bodyStyle={style.snackbar}
+                        message={
+                            "Your questionnaire has been added to the database"
+                        }
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </form>
             </Paper>
         )
     }
 }
+
 export default AddQuestionnaireView

@@ -1,21 +1,18 @@
-import React from 'react'
-import { List, ListItem } from 'material-ui/List'
-import { database } from '../firebase'
-import Paper from "material-ui/Paper"
-import { Link } from 'react-router-dom'
-
-
-
-
+import React from 'react';
+import { List, ListItem } from 'material-ui/List';
+import { database } from '../firebase';
+import Paper from "material-ui/Paper";
+import { Link } from 'react-router-dom';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 const style = {
     paper: {
         margin: 20,
         padding: 20,
-        textAlign: "center"
-    },
-    button: {
-        marginTop: 20
+        textAlign: "center",
+        wordWrap: "break-word"
+
     },
     snackbar: {
         width: '100%',
@@ -45,6 +42,10 @@ class QuestionnaireList extends React.Component {
         )
     }
 
+    onClickDeleteTestHandler = (questionnaire) => {
+        database.ref(`/questionnaires/${questionnaire.id}`).remove()
+    }
+
     componentDidMount() {
         this.loadData()
     }
@@ -52,6 +53,7 @@ class QuestionnaireList extends React.Component {
     componentWillUnmount() {
         database.ref(`/questionnaires`).off()
     }
+
     render() {
         return (
             <div>
@@ -71,15 +73,26 @@ class QuestionnaireList extends React.Component {
                                         <ListItem
                                             key={questionnaire.id}
                                             primaryText={questionnaire.description}
+                                            rightIconButton={
+                                                <IconButton
+                                                    onClick={(event) => {
+                                                        event.preventDefault()
+                                                        this.onClickDeleteTestHandler(questionnaire)
+                                                    }
+                                                    }
+                                                >
+                                                    <DeleteIcon></DeleteIcon>
+                                                </IconButton>
+                                            }
                                         />
                                     </Link>
                                 ))
                         }
                     </List >
-
                 </Paper>
             </div>
         )
     }
 }
+
 export default QuestionnaireList

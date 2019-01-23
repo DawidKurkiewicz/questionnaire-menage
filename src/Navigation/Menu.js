@@ -4,12 +4,12 @@ import Drawer from 'material-ui/Drawer';
 
 const style = {
     textAlign: "center"
-};
+}
 
 class Navbar extends React.Component {
     state = {
         isDrawerOpen: false
-    };
+    }
 
     toggleDrawer = () => this.setState({ isDrawerOpen: !this.state.isDrawerOpen })
     render() {
@@ -19,7 +19,6 @@ class Navbar extends React.Component {
                     title={"Recrutation Task"}
                     onLeftIconButtonClick={this.toggleDrawer}
                     style={style}
-
                 />
                 <Drawer
                     docked={false}
@@ -46,13 +45,11 @@ class Navbar extends React.Component {
                                 )
                             :
                             null
-
                     };
                 </Drawer>
             </div>
         )
-    };
-
-};
+    }
+}
 
 export default Navbar
