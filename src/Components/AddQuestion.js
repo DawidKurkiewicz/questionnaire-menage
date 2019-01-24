@@ -33,6 +33,7 @@ class AddQuestionView extends React.Component {
             newQuestion: {
                 category: 'Any',
                 question: '',
+                validate: false,
             }
         }
     }
@@ -74,6 +75,7 @@ class AddQuestionView extends React.Component {
                 newQuestion: {
                     category: 'Any',
                     question: '',
+                    validate: false
                 }
             })
         } else {

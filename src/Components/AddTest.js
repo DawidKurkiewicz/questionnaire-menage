@@ -37,7 +37,9 @@ class AddTestView extends React.Component {
             categoryFilters: ['Any', "type1", "type2", "type3", "type4", "type5"],
             createdTest: {
                 description: "",
-                questions: {}
+                questions: {},
+                validate: false,
+
             }
         }
     }
@@ -87,6 +89,8 @@ class AddTestView extends React.Component {
                 chosenCategoryFilter: 0,
                 open: true,
                 value: "",
+                validate: false,
+
                 createdTest: {
                     description: "",
                     questions: {}

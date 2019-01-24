@@ -23,6 +23,7 @@ class QuestionnaireList extends React.Component {
     state = {
         questionnaires: null,
     }
+
     loadData = () => {
         database.ref(`/questionnaires`).on(
             'value',

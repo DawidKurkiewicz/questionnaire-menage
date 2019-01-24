@@ -27,6 +27,8 @@ class AddStudentView extends React.Component {
             open: false,
             newStudent: {
                 student: '',
+                validate: false,
+
             }
         }
     }
@@ -56,6 +58,7 @@ class AddStudentView extends React.Component {
                 chosenCategoryFilter: 0,
                 newStudent: {
                     student: '',
+                    validate: false,
                 }
             })
         } else {

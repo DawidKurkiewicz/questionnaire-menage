@@ -6,6 +6,8 @@ import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Snackbar from 'material-ui/Snackbar';
 import { database } from '../firebase';
+import Checkbox from "material-ui/Checkbox";
+
 
 const style = {
     paper: {
@@ -129,23 +131,12 @@ class AddQuestionnaireView extends React.Component {
         })
     }
 
-    onTestCheckBoxSelectionHandler = (id, value) => {
-        const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    
-    if (currentIndex === -1) {
-        newChecked.push(value);
-      } else {
-        newChecked.splice(currentIndex, 1);
-      }
-
+    onTestCheckBoxSelectionHandler = (id) => {
         const newQuestionnaires = {
             ...this.state.createdQuestionnaire.tests,
         }
         newQuestionnaires[id] = true
         this.setState({
-            checked: newChecked,
             createdQuestionnaire: {
                 ...this.state.createdQuestionnaire,
                 tests: newQuestionnaires,
@@ -205,7 +196,8 @@ class AddQuestionnaireView extends React.Component {
                                     <ListItem
                                         key={group.id}
                                         primaryText={group.description}
-                                        leftCheckbox={<input
+                                        leftCheckbox={<Checkbox
+
                                             type="checkbox"
                                             onClick={() => this.onGroupCheckBoxSelectionHandler(group.id)} />}
                                     />
