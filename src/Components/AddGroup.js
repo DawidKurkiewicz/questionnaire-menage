@@ -33,7 +33,6 @@ class AddGroupView extends React.Component {
             createdGroup: {
                 description: "",
                 students: {},
-                validate: false,
             }
         }
     }
@@ -75,8 +74,6 @@ class AddGroupView extends React.Component {
                 createdGroup: {
                     description: "",
                     students: {},
-                    validate: false,
-
                 }
             })
 
